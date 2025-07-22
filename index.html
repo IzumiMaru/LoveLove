@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หัวใจบอกรัก 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #f8b500, #ff9ff3);
+            background-size: 400% 400%;
+            animation: gradientMove 8s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .heart {
+            width: 200px;
+            height: 180px;
+            position: relative;
+            margin: 0 auto 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .heart:hover {
+            transform: scale(1.1);
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 100px;
+            height: 160px;
+            position: absolute;
+            left: 100px;
+            background: linear-gradient(45deg, #ff1744, #e91e63, #ff6b9d);
+            border-radius: 100px 100px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+            animation: heartbeat 2s infinite;
+            box-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
+        }
+
+        .heart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: rotate(-45deg) scale(1); }
+            25% { transform: rotate(-45deg) scale(1.05); }
+            50% { transform: rotate(-45deg) scale(1.1); }
+            75% { transform: rotate(-45deg) scale(1.05); }
+        }
+
+        .heart::after {
+            animation-name: heartbeatAfter;
+        }
+
+        @keyframes heartbeatAfter {
+            0%, 100% { transform: rotate(45deg) scale(1); }
+            25% { transform: rotate(45deg) scale(1.05); }
+            50% { transform: rotate(45deg) scale(1.1); }
+            75% { transform: rotate(45deg) scale(1.05); }
+        }
+
+        .message {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .love-text {
+            font-size: 28px;
+            color: #e91e63;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 2px 2px 4px rgba(233, 30, 99, 0.3); }
+            to { text-shadow: 2px 2px 20px rgba(233, 30, 99, 0.8); }
+        }
+
+        .sub-text {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .btn-love {
+            background: linear-gradient(45deg, #ff1744, #e91e63);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 23, 68, 0.4);
+        }
+
+        .btn-love:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 23, 68, 0.6);
+        }
+
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 23, 68, 0.6);
+            font-size: 20px;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 480px) {
+            .heart { width: 150px; height: 135px; }
+            .heart::before, .heart::after { width: 75px; height: 120px; }
+            .heart::before { left: 75px; }
+            .love-text { font-size: 24px; }
+            .message { padding: 20px; margin: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="floatingHearts"></div>
+    
+    <div class="container">
+        <div class="heart" onclick="createHeartExplosion()"></div>
+        
+        <div class="message">
+            <div class="love-text">ฉันรักเธอ 💕</div>
+            <div class="sub-text">
+                เธอคือแสงสว่างในชีวิตของฉัน<br>
+                ทุกวันที่มีเธอคือวันที่สวยงาม<br>
+                รักเธอมากที่สุดในโลก ❤️
+            </div>
+            <button class="btn-love" onclick="showLoveMessage()">กดเพื่อรับความรัก</button>
+        </div>
+    </div>
+
+    <script>
+        // สร้างหัวใจลอยขึ้นมา
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['💕', '❤️', '💖', '💗', '💘', '💝'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
+                
+                container.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }, 300);
+        }
+
+        // สร้างการระเบิดของหัวใจเมื่อคลิก
+        function createHeartExplosion() {
+            const heart = document.querySelector('.heart');
+            const rect = heart.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 12; i++) {
+                const miniHeart = document.createElement('div');
+                miniHeart.innerHTML = '💕';
+                miniHeart.style.position = 'fixed';
+                miniHeart.style.left = centerX + 'px';
+                miniHeart.style.top = centerY + 'px';
+                miniHeart.style.fontSize = '20px';
+                miniHeart.style.color = '#ff1744';
+                miniHeart.style.pointerEvents = 'none';
+                miniHeart.style.zIndex = '1000';
+                
+                const angle = (i * 30) * Math.PI / 180;
+                const distance = 100;
+                const targetX = centerX + Math.cos(angle) * distance;
+                const targetY = centerY + Math.sin(angle) * distance;
+                
+                document.body.appendChild(miniHeart);
+                
+                miniHeart.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${targetX - centerX}px, ${targetY - centerY}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 1000,
+                    easing: 'ease-out'
+                }).onfinish = () => miniHeart.remove();
+            }
+        }
+
+        // แสดงข้อความรัก
+        function showLoveMessage() {
+            const messages = [
+                'รักเธอนะ! 💕',
+                'เธอคือทุกอย่างของฉัน ❤️',
+                'ขอให้เราอยู่ด้วยกันตลอดไป 💖',
+                'เธอทำให้ฉันมีความสุขที่สุด 💗',
+                'ในใจฉันมีแต่เธอคนเดียว 💘'
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.style.position = 'fixed';
+            messageDiv.style.top = '50%';
+            messageDiv.style.left = '50%';
+            messageDiv.style.transform = 'translate(-50%, -50%)';
+            messageDiv.style.background = 'rgba(255, 255, 255, 0.95)';
+            messageDiv.style.padding = '20px 30px';
+            messageDiv.style.borderRadius = '15px';
+            messageDiv.style.fontSize = '24px';
+            messageDiv.style.color = '#e91e63';
+            messageDiv.style.fontWeight = 'bold';
+            messageDiv.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
+            messageDiv.style.zIndex = '1001';
+            messageDiv.innerHTML = randomMessage;
+            
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 2500);
+        }
+
+        // สร้างดาวแต่ง
+        function createSparkles() {
+            setInterval(() => {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 2000);
+            }, 200);
+        }
+
+        // เริ่มต้นแอนิเมชั่น
+        createFloatingHearts();
+        createSparkles();
+    </script>
+</body>
+</html>
